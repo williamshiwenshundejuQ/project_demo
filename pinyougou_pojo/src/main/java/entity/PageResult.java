@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 public class PageResult implements Serializable {
-    private long total;
-    private List rows;
+    private long total; //总记录数
+    private List rows;  //每页显示的记录数
 
     public PageResult(long total, List rows) {
         this.total = total;

@@ -19,11 +19,11 @@ public interface BrandService {
 
 	/**
 	 * 分页功能实现
-	 * @param page
+	 * @param pageNum
 	 * @param rows
 	 * @return
 	 */
-	public PageResult findPage(Integer page,Integer rows);
+	public PageResult findPage(int pageNum,int rows);
 
 
 
