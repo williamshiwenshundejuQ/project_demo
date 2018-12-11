@@ -68,6 +68,24 @@
                     }
                 )
             }
+            $scope.selectIds=[];
+            $scope.updateSelection=function ($event, id) {
+                if($event.target.checked){
+                    $scope.selectIds.push(id);
+                }else{
+                    var idx = $scope.selectIds.indexOf(id);
+                    $scope.selectIds.splice(idx,1);
+                }
+            }
+            $scope.dele=function () {
+                $http.get("../brand/delete.do?ids="+$scope.selectIds).success(
+                    function (response) {
+                        if(response.success){
+                            $scope.reloadList;
+                        }
+                    }
+                )
+            }
         })
     </script>
 
@@ -91,7 +109,7 @@
                     <button type="button" class="btn btn-default" title="新建" data-toggle="modal"
                             data-target="#editModal"><i class="fa fa-file-o" ng-click="entity={}"></i> 新建
                     </button>
-                    <button type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i> 删除</button>
+                    <button type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o" ng-click="dele()"></i> 删除</button>
                     <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i
                             class="fa fa-refresh"></i> 刷新
                     </button>
@@ -110,7 +128,7 @@
             <thead>
             <tr>
                 <th class="" style="padding-right:0px">
-                    <input id="selall" type="checkbox" class="icheckbox_square-blue">
+                    <input id="selall" type="checkbox" class="icheckbox_square-blue" ng-click="updateSelection($event,entity.id)">
                 </th>
                 <th class="sorting_asc">品牌ID</th>
                 <th class="sorting">品牌名称</th>

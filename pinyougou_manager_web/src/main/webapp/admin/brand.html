@@ -54,7 +54,7 @@
                 $http.post("../brand/" +methodName+ ".do",$scope.entity).success(
                     function (response) {
                         if(response.success){
-                            $scope.reloadList;
+                            $scope.reloadList();
                         }else{
                             alert(response.message);
                         }
@@ -65,6 +65,24 @@
                 $http.get("../brand/findOne.do?id=" + id).success(
                     function (response) {
                         $scope.entity=response;
+                    }
+                )
+            }
+            $scope.selectIds=[];
+            $scope.updateSelection=function ($event, id) {
+                if($event.target.checked){
+                    $scope.selectIds.push(id);
+                }else{
+                    var idx = $scope.selectIds.indexOf(id);
+                    $scope.selectIds.splice(idx,1);
+                }
+            }
+            $scope.dele=function () {
+                $http.get("../brand/delete.do?ids="+$scope.selectIds).success(
+                    function (response) {
+                        if(response.success){
+                            $scope.reloadList();
+                        }
                     }
                 )
             }
@@ -88,10 +106,10 @@
         <div class="pull-left">
             <div class="form-group form-inline">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-default" title="新建" data-toggle="modal"
-                            data-target="#editModal"><i class="fa fa-file-o" ng-click="entity={}"></i> 新建
+                    <button type="button" class="btn btn-default" title="新建" ng-click="entity={}"data-toggle="modal"
+                            data-target="#editModal"><i class="fa fa-file-o"></i> 新建
                     </button>
-                    <button type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i> 删除</button>
+                    <button type="button" class="btn btn-default" title="删除" ng-click="dele()"><i class="fa fa-trash-o"></i> 删除</button>
                     <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i
                             class="fa fa-refresh"></i> 刷新
                     </button>
@@ -120,7 +138,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="entity in list">
-                <td><input type="checkbox"></td>
+                <td><input type="checkbox" ng-click="updateSelection($event,entity.id)"></td>
                 <td>{{entity.id}}</td>
                 <td>{{entity.name}}</td>
                 <td>{{entity.firstChild}}</td>

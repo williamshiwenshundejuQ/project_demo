@@ -44,6 +44,12 @@ public interface BrandService {
 	 */
 	public TbBrand findOne(Long id);
 
+	/**
+	 * 批量删除
+	 * @param ids
+	 */
+	public void delete(Long ids[]);
+
 
 	
 }
