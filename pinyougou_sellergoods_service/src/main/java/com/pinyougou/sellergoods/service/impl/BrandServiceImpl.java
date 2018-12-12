@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.pinyougou.pojo.TbAddressExample;
+import com.pinyougou.pojo.TbBrandExample;
 import entity.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -53,6 +55,23 @@ public class BrandServiceImpl implements BrandService {
 		for (Long id : ids) {
 			brandMapper.deleteByPrimaryKey(id);
 		}
+	}
+
+	@Override
+	public PageResult findPage(TbBrand tbBrand, int pageNum, int rows) {
+		PageHelper.startPage(pageNum,rows);
+		TbBrandExample example = new TbBrandExample();
+		TbBrandExample.Criteria criteria = example.createCriteria();
+		if(tbBrand!=null){
+			if(tbBrand.getName()!=null && tbBrand.getName().length()>0){
+				criteria.andNameLike("%" + tbBrand.getName() + "%");
+			}
+			if(tbBrand.getFirstChar()!=null && tbBrand.getFirstChar().length()>0){
+				criteria.andFirstCharLike("%" + tbBrand.getFirstChar() + "%");
+			}
+		}
+		Page<TbBrand> page = (Page<TbBrand>) brandMapper.selectByExample(example);
+		return new PageResult(page.getTotal(),page.getResult());
 	}
 
 }

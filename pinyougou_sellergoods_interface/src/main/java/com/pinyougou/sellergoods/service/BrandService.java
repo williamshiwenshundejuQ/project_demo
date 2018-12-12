@@ -50,6 +50,13 @@ public interface BrandService {
 	 */
 	public void delete(Long ids[]);
 
-
+	/**
+	 * 通过品牌名称搜索品牌
+	 * @param tbBrand
+	 * @param pageNum
+	 * @param rows
+	 * @return
+	 */
+    public PageResult findPage(TbBrand tbBrand,int pageNum,int rows);
 	
 }
