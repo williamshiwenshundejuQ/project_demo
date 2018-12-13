@@ -60,15 +60,17 @@ app.controller('typeTemplateController' ,function($scope,$controller   ,typeTemp
 	 
 	//批量删除 
 	$scope.dele=function(){			
-		//获取选中的复选框			
-		typeTemplateService.dele( $scope.selectIds ).success(
-			function(response){
-				if(response.success){
-					$scope.reloadList();//刷新列表
-					$scope.selectIds=[];
-				}						
-			}		
-		);				
+		if(confirm("确定要删除?")){
+			//获取选中的复选框			
+				typeTemplateService.dele( $scope.selectIds ).success(
+					function(response){
+						if(response.success){
+							$scope.reloadList();//刷新列表
+							$scope.selectIds=[];
+						}						
+					}		
+		);			
+		}	
 	}
 	
 	$scope.searchEntity={};//定义搜索对象 
@@ -113,5 +115,8 @@ app.controller('typeTemplateController' ,function($scope,$controller   ,typeTemp
 	$scope.deleTableRow=function(index){
 		$scope.entity.customAttributeItems.splice( index,1);
 	}
+
+	//手动添加数据
+	$scope.brandList={data:[{id:1,text:"联想"},{id:2,text:"小米"}]}
 	
 });	

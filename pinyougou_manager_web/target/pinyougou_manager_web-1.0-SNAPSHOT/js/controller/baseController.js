@@ -36,14 +36,17 @@ app.controller('baseController' ,function($scope){
 		var json= JSON.parse(jsonString);
 		var value="";
 		
-		for(var i=0;i<json.length;i++){
-			if(i>0){
-				value+=",";
-			}			
-			value +=json[i][key];			
+		if(json!=null){
+			for(var i=0;i<json.length;i++){  	 
+				if(i>0){ 
+					 value+="," 
+				} 
+				value+=json[i][key];  	 	 
+		   } 
+		}else{
+			value=" ";
 		}
-				
 		return value;
-	}
+}
 	
 });	
