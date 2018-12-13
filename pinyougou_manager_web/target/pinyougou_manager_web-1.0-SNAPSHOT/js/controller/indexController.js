@@ -1,7 +1,7 @@
-app.controller("indexController",function ($scope, $controller, loginService) {
-    $scope.showLoginName=function () {
+app.controller("indexController",function($scope,loginService,$controller){
+    $scope.showLoginName=function(){
         loginService.loginName().success(
-            function (response) {
+            function(response){
                 $scope.loginName=response.loginName;
             }
         )
